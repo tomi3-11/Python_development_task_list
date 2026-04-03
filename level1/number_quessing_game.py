@@ -2,6 +2,10 @@ import random
 
 def main():
     secret = secret_number()
+    number_guessing(secret)
+
+
+def number_guessing(secret):
     attempt = 0
     max_attempt = 5
     while True:
