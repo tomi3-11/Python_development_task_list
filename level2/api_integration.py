@@ -32,7 +32,17 @@ def api_integration(city):
     else:
         return f"Error Ocurred: Can fetch {city}'s data."
 
-    return f"{'City':<8} | {city:<6}\n{'Temperature':<8} | {weather_data["temperature"]:<6}"
+    display_data = f"""
+{'City':<12} | {weather_data["city"]:<12}|
+{'Country':<12} | {weather_data["country"]:<12}|
+{'Temperature':<12} | {weather_data["temperature"]:<12}|
+{'Pressure':<12} | {weather_data["pressure"]:<12}|
+{'Minimun Temp':<12} | {weather_data["min"]:<12}|
+{'Maximum Temp':<12} | {weather_data["max"]:<12}|
+{'Time Zone':<12} | {weather_data["timezone"]:<12}|
+    """
+
+    return display_data
 
 
 if __name__ == "__main__":
