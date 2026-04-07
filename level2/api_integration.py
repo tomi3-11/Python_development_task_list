@@ -13,9 +13,17 @@ def main():
 
 
 def api_integration(city):
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    response = requests.get(url)
-    data = response.json()
+    try:
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+    except requests.exceptions.HTTPError as err:
+        return f"HTTP error occured: {err}"
+    except requests.exceptions.RequestException as req_excep:
+        return f"Request Exception: {req_excep}"
+    except Exception as e:
+        return f"Error Occured: {e}"
 
     if response.status_code == 200:
         weather_data = {
