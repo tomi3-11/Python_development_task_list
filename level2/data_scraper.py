@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import requests
 
 
 def main():
@@ -6,7 +7,11 @@ def main():
 
 
 def scrape_data():
-    pass
+    url = "https://books.toscrape.com"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+
 
 
 if __name__ == "__main__":
