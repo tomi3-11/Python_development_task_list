@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Task Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; background: #f5f7fb; color: #1f2937; }
+        .container { max-width: 960px; margin: auto; background: #ffffff; padding: 1.5rem; border-radius: 12px; }
+        .nav { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+        .btn { background: #0f766e; color: #fff; text-decoration: none; border: none; border-radius: 6px; padding: 0.45rem 0.8rem; cursor: pointer; }
+        .btn.secondary { background: #334155; }
+        .btn.warn { background: #be123c; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border-bottom: 1px solid #e2e8f0; text-align: left; padding: 0.7rem; }
+        input, textarea { width: 100%; margin: 0.3rem 0 0.9rem; padding: 0.5rem; }
+        ul.messages { list-style: none; padding: 0; }
+        ul.messages li { background: #e2e8f0; padding: 0.5rem; border-radius: 6px; margin-bottom: 0.4rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a class="btn secondary" href="{% url 'task_list' %}">Tasks</a>
+            {% if user.is_authenticated %}
+                <a class="btn" href="{% url 'task_create' %}">Create Task</a>
+                {% if user.is_staff %}
+                    <a class="btn" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                {% endif %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn warn" type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a class="btn" href="{% url 'login' %}">Login</a>
+                <a class="btn" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
